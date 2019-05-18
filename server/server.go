@@ -17,10 +17,11 @@ const (
 type server struct{}
 
 var stubOptionsResponse *pb.OptionsResponse
+var stubCheckoutResponse *pb.CheckoutResponse
 
 func (s *server) Options(ctx context.Context, in *pb.OptionsRequest) (*pb.OptionsResponse, error) {
 
-	log.Printf("Options: %s, %s, %s, %s, %s", in.Segment, in.Msisdn, in.BillType, in.Username, in.Email)
+	log.Printf("Options: %v", in)
 	if in.Segment == "" || in.Msisdn == "" || in.BillType == "" {
 		return nil, errors.New("segment, msisdn and billType are mandatory")
 	}
@@ -29,7 +30,7 @@ func (s *server) Options(ctx context.Context, in *pb.OptionsRequest) (*pb.Option
 
 func (s *server) DeleteCard(ctx context.Context, in *pb.DeleteCardRequest) (*pb.DeleteCardResponse, error) {
 
-	log.Printf("Delete: %s, %s", in.PanLast4, in.Type)
+	log.Printf("Delete: %v", in)
 	if in.PanLast4 == "" || in.Type == "" {
 		return nil, errors.New("last 4 digits of the pan and the card type are mandatory")
 	}
@@ -37,6 +38,12 @@ func (s *server) DeleteCard(ctx context.Context, in *pb.DeleteCardRequest) (*pb.
 		return nil, err
 	}
 	return &pb.DeleteCardResponse{DeletionResult: "OK"}, nil
+}
+
+func (s *server) Checkout(ctx context.Context, in *pb.CheckoutRequest) (*pb.CheckoutResponse, error) {
+	log.Printf("Checkout: %v", in)
+	return &pb.CheckoutResponse{OrderId: "1506689622698", Status: "CAPTURED", OrderAmount: 1055, Currency: "EUR",
+		PaymentTotal: 1055, TxId: "XXXXXXX", PaymentRef: "ref234f342", Description: "a description for this checkout"}, nil
 }
 
 func main() {

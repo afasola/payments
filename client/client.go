@@ -34,6 +34,7 @@ func main() {
 	delete(ctx, c, "0608", "visa")
 	delete(ctx, c, "0777", "visa")
 	options(ctx, c)
+	checkout(ctx, c)
 
 }
 
@@ -45,6 +46,22 @@ func options(ctx context.Context, c pb.PaymentsClient) {
 		BillType: "BILL_PAYMENT",
 		Username: "ciccio",
 		Email:    "ciccio@mail.com"}); err != nil {
+		log.Printf("Error: %s\n\n", err)
+	} else {
+		log.Printf("%s\n\n", r)
+	}
+}
+
+func checkout(ctx context.Context, c pb.PaymentsClient) {
+	log.Printf("*** CHECKOUT *** \n")
+	if r, err := c.Checkout(ctx, &pb.CheckoutRequest{
+		OrderDesc:            "Monthly Payment",
+		SegmentType:          "SEGXYZ",
+		ActionType:           "TopUp",
+		Msisdn:               "606060",
+		OrderAmount:          5550,
+		ExtToken:             "SADDnlknlDSIDAS87SD(U£N93uqd",
+		AdditionalProperties: "{cli: 210xxxxxxx, msisdn: 707070, payerId: N12}"}); err != nil {
 		log.Printf("Error: %s\n\n", err)
 	} else {
 		log.Printf("%s\n\n", r)

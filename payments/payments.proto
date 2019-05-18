@@ -6,6 +6,7 @@ package payments;
 service Payments {
     rpc Options(OptionsRequest) returns (OptionsResponse) {}
     rpc DeleteCard(DeleteCardRequest) returns (DeleteCardResponse) {}
+    rpc Checkout(CheckoutRequest) returns (CheckoutResponse) {}
 }
 
 message OptionsRequest {
@@ -36,4 +37,25 @@ message DeleteCardRequest {
 
 message DeleteCardResponse {
     string deletionResult = 1;
+}
+
+message CheckoutRequest {
+    string orderDesc = 1;
+    string segmentType = 2;
+    string actionType = 3;
+    string msisdn = 4;
+    int32 orderAmount = 5;
+    string extToken = 6;
+    string additionalProperties = 7;
+}
+
+message CheckoutResponse {
+    string orderId = 1;
+    string status = 2;
+    int32 orderAmount = 3;
+    string currency = 4;
+    int32 paymentTotal = 5;
+    string txId = 6;
+    string paymentRef = 7;
+    string description = 8;
 }
