@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package payments;
+
+//The Payment service definition
+service Payments {
+    rpc Options(OptionsRequest) returns (OptionsResponse) {}
+    rpc DeleteCard(DeleteCardRequest) returns (DeleteCardResponse) {}
+}
+
+message OptionsRequest {
+    string segment = 1;
+    string msisdn = 2;
+    string billType = 3;
+    string username = 4;
+    string email = 5;
+}
+
+message OptionsResponse {
+    bool vaulted = 1;
+    repeated string availablePaymentOptions = 2;
+    repeated Card cards = 3;
+    repeated int32 topupOptions = 4;
+}
+
+message Card {
+    string panLast4 = 1;
+    string type = 2;
+    string extToken = 3;
+}
+
+message DeleteCardRequest {
+    string panLast4 = 1;
+    string type = 2;
+}
+
+message DeleteCardResponse {
+    string deletionResult = 1;
+}
