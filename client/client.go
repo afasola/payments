@@ -27,12 +27,12 @@ func main() {
 	defer cancel()
 
 	options(ctx, c)
-	delete(ctx, c, "1234")
-	delete(ctx, c, "1234", "amex")
+	deleteCard(ctx, c, "1234")
+	deleteCard(ctx, c, "1234", "amex")
 	options(ctx, c)
-	delete(ctx, c, "1234", "amex")
-	delete(ctx, c, "0608", "visa")
-	delete(ctx, c, "0777", "visa")
+	deleteCard(ctx, c, "1234", "amex")
+	deleteCard(ctx, c, "0608", "visa")
+	deleteCard(ctx, c, "0777", "visa")
 	options(ctx, c)
 	checkout(ctx, c)
 
@@ -68,8 +68,8 @@ func checkout(ctx context.Context, c pb.PaymentsClient) {
 	}
 }
 
-func delete(ctx context.Context, c pb.PaymentsClient, params ...string) {
-	log.Printf("*** DELETE *** \n")
+func deleteCard(ctx context.Context, c pb.PaymentsClient, params ...string) {
+	log.Printf("*** DELETE CARD *** \n")
 	if len(params) == 2 {
 		if r, err := c.DeleteCard(ctx, &pb.DeleteCardRequest{PanLast4: params[0], Type: params[1]}); err != nil {
 			log.Printf("Error while deleting (%s, %s): %s\n\n", params[0], params[1], err)
