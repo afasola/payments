@@ -10,22 +10,22 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites to develop
 
-Install GO (https://golang.org/doc/install)
+**Install GO** (https://golang.org/doc/install)
 
-Install gRPC
+**Install gRPC**
 
 ```
 go get -u google.golang.org/grpc
 ```
 
-Install Protocol Buffers v3
+**Install Protocol Buffers v3**
 
 Install the protoc compiler that is used to generate gRPC service code. The simplest way to do this is to download pre-compiled binaries for your platform(protoc-<version>-<platform>.zip) from here: https://github.com/google/protobuf/releases
 
 Unzip this file.
 Update the environment variable PATH to include the path to the protoc binary file.
 
-Install the protoc plugin for Go
+**Install the protoc plugin for Go**
 
 ```
 go get -u github.com/golang/protobuf/protoc-gen-go
@@ -53,7 +53,7 @@ go run server/server.go
 
 ### Docker
 
-To run it in Docker. Build the container
+Build the container
 
 ```
 docker build -t afasola/payments .
